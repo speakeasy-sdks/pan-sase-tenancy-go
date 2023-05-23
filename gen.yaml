@@ -1,4 +1,9 @@
 configVersion: 1.0.0
+management:
+  docChecksum: ffc1961848bd3d5bf3eab0f627ef1f13
+  docVersion: "1.0"
+  speakeasyVersion: 1.37.5
+  generationVersion: 2.32.2
 generation:
   comments:
     disableComments: false
@@ -9,5 +14,6 @@ generation:
   tagNamespacingDisabled: false
   telemetryEnabled: false
 go:
-  version: 0.0.1
+  version: 1.0.0
+  maxMethodParams: 0
   packageName: sase-tenancy

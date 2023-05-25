@@ -1,4 +1,11 @@
-# sase-tenancy
+<div align="center">
+    <img src="https://github.com/speakeasy-sdks/pan-sase-tenancy-ts/assets/6267663/e0205c2a-fa61-4b1f-aaa0-599896e022da" width="300">
+    <h1>SASE Tenancy Go SDK</h1>
+   <p>Containers used to build your tenant hierachy.</p>
+   <a href="https://pan.dev/category/sase/api/tenancy/tenant-service-group/"><img src="https://img.shields.io/static/v1?label=Docs&message=API Ref&color=000&style=for-the-badge" /></a>
+   <a href="https://github.com/speakeasy-sdks/pan-sase-tenancy-go/actions"><img src="https://img.shields.io/github/actions/workflow/status/speakeasy-sdks/pan-sase-tenancy-go/speakeasy_sdk_generation.yml?style=for-the-badge" /></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" /></a>
+</div>
 
 <!-- Start SDK Installation -->
 ## SDK Installation

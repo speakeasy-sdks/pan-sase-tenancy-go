@@ -24,6 +24,7 @@ pkg/models/operations/puttenancyv1tenantservicegroupstsgid.go
 pkg/models/shared/tenantservicegroup.go
 pkg/models/shared/tenantservicegroupcreate.go
 pkg/models/shared/tenantservicegroupupdate.go
+pkg/models/shared/security.go
 docs/sasetenancy/README.md
 docs/tenancygroup/README.md
 USAGE.md

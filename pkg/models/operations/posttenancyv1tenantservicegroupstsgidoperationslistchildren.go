@@ -7,11 +7,10 @@ import (
 	"sase-tenancy/pkg/models/shared"
 )
 
-type PostTenancyV1TenantServiceGroupsTsgIDOperationsListChildrenSecurity struct {
-	Bearer string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type PostTenancyV1TenantServiceGroupsTsgIDOperationsListChildrenRequest struct {
+	// A unique identifier for the tenant service group.
+	//
+	TsgID string `pathParam:"style=simple,explode=false,name=tsg_id"`
 	// If `true`, return the entire descendent hierarchy.
 	// If `false`, return only the immediate children of the
 	// TSG identified in this call's path. Default is
@@ -23,9 +22,6 @@ type PostTenancyV1TenantServiceGroupsTsgIDOperationsListChildrenRequest struct {
 	// self. Default is `false`.
 	//
 	IncludeSelf *bool `queryParam:"style=form,explode=true,name=include_self"`
-	// A unique identifier for the tenant service group.
-	//
-	TsgID string `pathParam:"style=simple,explode=false,name=tsg_id"`
 }
 
 // PostTenancyV1TenantServiceGroupsTsgIDOperationsListChildren200ApplicationJSON - Successful response.

@@ -39,7 +39,7 @@ func newTenancyGroup(defaultClient, securityClient HTTPClient, serverURL, langua
 // The service account used to authenticate this request
 // is granted `msp_superuser` access to the new tenant
 // service group.
-func (s *tenancyGroup) Create(ctx context.Context, request shared.TenantServiceGroupCreate, security operations.PostTenancyV1TenantServiceGroupsSecurity) (*operations.PostTenancyV1TenantServiceGroupsResponse, error) {
+func (s *tenancyGroup) Create(ctx context.Context, request shared.TenantServiceGroupCreate) (*operations.PostTenancyV1TenantServiceGroupsResponse, error) {
 	baseURL := s.serverURL
 	url := strings.TrimSuffix(baseURL, "/") + "/tenancy/v1/tenant_service_groups"
 
@@ -60,7 +60,7 @@ func (s *tenancyGroup) Create(ctx context.Context, request shared.TenantServiceG
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := utils.ConfigureSecurityClient(s.defaultClient, security)
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -114,7 +114,11 @@ func (s *tenancyGroup) Create(ctx context.Context, request shared.TenantServiceG
 // in this API's path does not match the TSG ID contained in
 // the access token used to authenticate this request, this
 // request will fail.
-func (s *tenancyGroup) Delete(ctx context.Context, request operations.DeleteTenancyV1TenantServiceGroupsTsgIDRequest, security operations.DeleteTenancyV1TenantServiceGroupsTsgIDSecurity) (*operations.DeleteTenancyV1TenantServiceGroupsTsgIDResponse, error) {
+func (s *tenancyGroup) Delete(ctx context.Context, tsgID string) (*operations.DeleteTenancyV1TenantServiceGroupsTsgIDResponse, error) {
+	request := operations.DeleteTenancyV1TenantServiceGroupsTsgIDRequest{
+		TsgID: tsgID,
+	}
+
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/tenancy/v1/tenant_service_groups/{tsg_id}", request, nil)
 	if err != nil {
@@ -128,7 +132,7 @@ func (s *tenancyGroup) Delete(ctx context.Context, request operations.DeleteTena
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
 
-	client := utils.ConfigureSecurityClient(s.defaultClient, security)
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -177,7 +181,11 @@ func (s *tenancyGroup) Delete(ctx context.Context, request operations.DeleteTena
 
 // Get - Get a tenant service group
 // Get a tenant service group by TSG ID.
-func (s *tenancyGroup) Get(ctx context.Context, request operations.GetTenancyV1TenantServiceGroupsTsgIDRequest, security operations.GetTenancyV1TenantServiceGroupsTsgIDSecurity) (*operations.GetTenancyV1TenantServiceGroupsTsgIDResponse, error) {
+func (s *tenancyGroup) Get(ctx context.Context, tsgID string) (*operations.GetTenancyV1TenantServiceGroupsTsgIDResponse, error) {
+	request := operations.GetTenancyV1TenantServiceGroupsTsgIDRequest{
+		TsgID: tsgID,
+	}
+
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/tenancy/v1/tenant_service_groups/{tsg_id}", request, nil)
 	if err != nil {
@@ -191,7 +199,7 @@ func (s *tenancyGroup) Get(ctx context.Context, request operations.GetTenancyV1T
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s", s.language, s.sdkVersion, s.genVersion))
 
-	client := utils.ConfigureSecurityClient(s.defaultClient, security)
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -242,7 +250,11 @@ func (s *tenancyGroup) Get(ctx context.Context, request operations.GetTenancyV1T
 // Get a list of all the tenant service groups
 // that are available to the service account used to
 // authenticate this request.
-func (s *tenancyGroup) List(ctx context.Context, request operations.GetTenancyV1TenantServiceGroupsRequest, security operations.GetTenancyV1TenantServiceGroupsSecurity) (*operations.GetTenancyV1TenantServiceGroupsResponse, error) {
+func (s *tenancyGroup) List(ctx context.Context, hierarchy *bool) (*operations.GetTenancyV1TenantServiceGroupsResponse, error) {
+	request := operations.GetTenancyV1TenantServiceGroupsRequest{
+		Hierarchy: hierarchy,
+	}
+
 	baseURL := s.serverURL
 	url := strings.TrimSuffix(baseURL, "/") + "/tenancy/v1/tenant_service_groups"
 
@@ -257,7 +269,7 @@ func (s *tenancyGroup) List(ctx context.Context, request operations.GetTenancyV1
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.defaultClient, security)
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -310,7 +322,14 @@ func (s *tenancyGroup) List(ctx context.Context, request operations.GetTenancyV1
 // in this API's path does not match the TSG ID contained in
 // the access token used to authenticate this request, this
 // request will fail.
-func (s *tenancyGroup) ListAncestors(ctx context.Context, request operations.PostTenancyV1TenantServiceGroupsTsgIDOperationsListAncestorsRequest, security operations.PostTenancyV1TenantServiceGroupsTsgIDOperationsListAncestorsSecurity) (*operations.PostTenancyV1TenantServiceGroupsTsgIDOperationsListAncestorsResponse, error) {
+func (s *tenancyGroup) ListAncestors(ctx context.Context, tsgID string, fields *string, includeSelf *bool, sort *operations.PostTenancyV1TenantServiceGroupsTsgIDOperationsListAncestorsSort) (*operations.PostTenancyV1TenantServiceGroupsTsgIDOperationsListAncestorsResponse, error) {
+	request := operations.PostTenancyV1TenantServiceGroupsTsgIDOperationsListAncestorsRequest{
+		TsgID:       tsgID,
+		Fields:      fields,
+		IncludeSelf: includeSelf,
+		Sort:        sort,
+	}
+
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/tenancy/v1/tenant_service_groups/{tsg_id}/operations/list_ancestors", request, nil)
 	if err != nil {
@@ -328,7 +347,7 @@ func (s *tenancyGroup) ListAncestors(ctx context.Context, request operations.Pos
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.defaultClient, security)
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -381,7 +400,13 @@ func (s *tenancyGroup) ListAncestors(ctx context.Context, request operations.Pos
 // in this API's path does not match the TSG ID contained in
 // the access token used to authenticate this request, this
 // request will fail.
-func (s *tenancyGroup) ListChildren(ctx context.Context, request operations.PostTenancyV1TenantServiceGroupsTsgIDOperationsListChildrenRequest, security operations.PostTenancyV1TenantServiceGroupsTsgIDOperationsListChildrenSecurity) (*operations.PostTenancyV1TenantServiceGroupsTsgIDOperationsListChildrenResponse, error) {
+func (s *tenancyGroup) ListChildren(ctx context.Context, tsgID string, hierarchy *bool, includeSelf *bool) (*operations.PostTenancyV1TenantServiceGroupsTsgIDOperationsListChildrenResponse, error) {
+	request := operations.PostTenancyV1TenantServiceGroupsTsgIDOperationsListChildrenRequest{
+		TsgID:       tsgID,
+		Hierarchy:   hierarchy,
+		IncludeSelf: includeSelf,
+	}
+
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/tenancy/v1/tenant_service_groups/{tsg_id}/operations/list_children", request, nil)
 	if err != nil {
@@ -399,7 +424,7 @@ func (s *tenancyGroup) ListChildren(ctx context.Context, request operations.Post
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.defaultClient, security)
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -451,7 +476,12 @@ func (s *tenancyGroup) ListChildren(ctx context.Context, request operations.Post
 // in this API's path does not match the TSG ID contained in
 // the access token used to authenticate this request, this
 // request will fail.
-func (s *tenancyGroup) Update(ctx context.Context, request operations.PutTenancyV1TenantServiceGroupsTsgIDRequest, security operations.PutTenancyV1TenantServiceGroupsTsgIDSecurity) (*operations.PutTenancyV1TenantServiceGroupsTsgIDResponse, error) {
+func (s *tenancyGroup) Update(ctx context.Context, tenantServiceGroupUpdate shared.TenantServiceGroupUpdate, tsgID string) (*operations.PutTenancyV1TenantServiceGroupsTsgIDResponse, error) {
+	request := operations.PutTenancyV1TenantServiceGroupsTsgIDRequest{
+		TenantServiceGroupUpdate: tenantServiceGroupUpdate,
+		TsgID:                    tsgID,
+	}
+
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/tenancy/v1/tenant_service_groups/{tsg_id}", request, nil)
 	if err != nil {
@@ -475,7 +505,7 @@ func (s *tenancyGroup) Update(ctx context.Context, request operations.PutTenancy
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := utils.ConfigureSecurityClient(s.defaultClient, security)
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

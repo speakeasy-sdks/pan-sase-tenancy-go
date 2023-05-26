@@ -7,11 +7,14 @@ import(
 	"log"
 	"sase-tenancy"
 	"sase-tenancy/pkg/models/shared"
-	"sase-tenancy/pkg/models/operations"
 )
 
 func main() {
-    s := sasetenancy.New()
+    s := sasetenancy.New(
+        sasetenancy.WithSecurity(shared.Security{
+            Bearer: "YOUR_BEARER_TOKEN_HERE",
+        }),
+    )
 
     ctx := context.Background()
     res, err := s.TenancyGroup.Create(ctx, shared.TenantServiceGroupCreate{
@@ -19,8 +22,6 @@ func main() {
         ParentID: sasetenancy.String("1378242802"),
         SupportContact: sasetenancy.String("user@example.com"),
         Vertical: shared.TenantServiceGroupCreateVerticalHighTech.ToPointer(),
-    }, operations.PostTenancyV1TenantServiceGroupsSecurity{
-        Bearer: "YOUR_BEARER_TOKEN_HERE",
     })
     if err != nil {
         log.Fatal(err)

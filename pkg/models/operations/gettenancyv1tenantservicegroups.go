@@ -7,10 +7,6 @@ import (
 	"sase-tenancy/pkg/models/shared"
 )
 
-type GetTenancyV1TenantServiceGroupsSecurity struct {
-	Bearer string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetTenancyV1TenantServiceGroupsRequest struct {
 	// Indicates whether the response structure lists groups in
 	// their hierarchy, or as an array of TSGs without regard to

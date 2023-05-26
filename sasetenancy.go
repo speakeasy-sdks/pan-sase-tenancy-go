@@ -4,6 +4,7 @@ package sasetenancy
 
 import (
 	"net/http"
+	"sase-tenancy/pkg/models/shared"
 	"sase-tenancy/pkg/utils"
 	"time"
 )
@@ -43,11 +44,11 @@ type SaseTenancy struct {
 	// Non-idiomatic field names below are to namespace fields from the fields names above to avoid name conflicts
 	_defaultClient  HTTPClient
 	_securityClient HTTPClient
-
-	_serverURL  string
-	_language   string
-	_sdkVersion string
-	_genVersion string
+	_security       *shared.Security
+	_serverURL      string
+	_language       string
+	_sdkVersion     string
+	_genVersion     string
 }
 
 type SDKOption func(*SaseTenancy)
@@ -77,11 +78,18 @@ func WithClient(client HTTPClient) SDKOption {
 	}
 }
 
+// WithSecurity configures the SDK to use the provided security details
+func WithSecurity(security shared.Security) SDKOption {
+	return func(sdk *SaseTenancy) {
+		sdk._security = &security
+	}
+}
+
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *SaseTenancy {
 	sdk := &SaseTenancy{
 		_language:   "go",
-		_sdkVersion: "1.0.0",
+		_sdkVersion: "1.0.1",
 		_genVersion: "2.32.2",
 	}
 	for _, opt := range opts {
@@ -93,7 +101,11 @@ func New(opts ...SDKOption) *SaseTenancy {
 		sdk._defaultClient = &http.Client{Timeout: 60 * time.Second}
 	}
 	if sdk._securityClient == nil {
-		sdk._securityClient = sdk._defaultClient
+		if sdk._security != nil {
+			sdk._securityClient = utils.ConfigureSecurityClient(sdk._defaultClient, sdk._security)
+		} else {
+			sdk._securityClient = sdk._defaultClient
+		}
 	}
 
 	if sdk._serverURL == "" {

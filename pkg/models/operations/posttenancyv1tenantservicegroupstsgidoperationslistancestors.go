@@ -9,10 +9,6 @@ import (
 	"sase-tenancy/pkg/models/shared"
 )
 
-type PostTenancyV1TenantServiceGroupsTsgIDOperationsListAncestorsSecurity struct {
-	Bearer string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // PostTenancyV1TenantServiceGroupsTsgIDOperationsListAncestorsSort - Identifies the response structure's sort order:
 //
 // * `asc` : From root to leaf.
@@ -45,6 +41,9 @@ func (e *PostTenancyV1TenantServiceGroupsTsgIDOperationsListAncestorsSort) Unmar
 }
 
 type PostTenancyV1TenantServiceGroupsTsgIDOperationsListAncestorsRequest struct {
+	// A unique identifier for the tenant service group.
+	//
+	TsgID string `pathParam:"style=simple,explode=false,name=tsg_id"`
 	// Provide a comma-separated list of fields you want returned.
 	//
 	Fields *string `queryParam:"style=form,explode=true,name=fields"`
@@ -59,9 +58,6 @@ type PostTenancyV1TenantServiceGroupsTsgIDOperationsListAncestorsRequest struct 
 	// * `desc` : From leaf to root.
 	//
 	Sort *PostTenancyV1TenantServiceGroupsTsgIDOperationsListAncestorsSort `queryParam:"style=form,explode=true,name=sort"`
-	// A unique identifier for the tenant service group.
-	//
-	TsgID string `pathParam:"style=simple,explode=false,name=tsg_id"`
 }
 
 // PostTenancyV1TenantServiceGroupsTsgIDOperationsListAncestors200ApplicationJSON - Successful response.

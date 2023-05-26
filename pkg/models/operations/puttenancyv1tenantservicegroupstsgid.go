@@ -7,10 +7,6 @@ import (
 	"sase-tenancy/pkg/models/shared"
 )
 
-type PutTenancyV1TenantServiceGroupsTsgIDSecurity struct {
-	Bearer string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type PutTenancyV1TenantServiceGroupsTsgIDRequest struct {
 	TenantServiceGroupUpdate shared.TenantServiceGroupUpdate `request:"mediaType=application/json"`
 	// A unique identifier for the tenant service group.

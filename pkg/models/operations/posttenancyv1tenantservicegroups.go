@@ -7,10 +7,6 @@ import (
 	"sase-tenancy/pkg/models/shared"
 )
 
-type PostTenancyV1TenantServiceGroupsSecurity struct {
-	Bearer string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type PostTenancyV1TenantServiceGroupsResponse struct {
 	ContentType string
 	StatusCode  int

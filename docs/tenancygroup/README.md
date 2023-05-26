@@ -28,11 +28,14 @@ import(
 	"log"
 	"sase-tenancy"
 	"sase-tenancy/pkg/models/shared"
-	"sase-tenancy/pkg/models/operations"
 )
 
 func main() {
-    s := sasetenancy.New()
+    s := sasetenancy.New(
+        sasetenancy.WithSecurity(shared.Security{
+            Bearer: "YOUR_BEARER_TOKEN_HERE",
+        }),
+    )
 
     ctx := context.Background()
     res, err := s.TenancyGroup.Create(ctx, shared.TenantServiceGroupCreate{
@@ -40,8 +43,6 @@ func main() {
         ParentID: sasetenancy.String("1378242802"),
         SupportContact: sasetenancy.String("user@example.com"),
         Vertical: shared.TenantServiceGroupCreateVerticalHighTech.ToPointer(),
-    }, operations.PostTenancyV1TenantServiceGroupsSecurity{
-        Bearer: "YOUR_BEARER_TOKEN_HERE",
     })
     if err != nil {
         log.Fatal(err)
@@ -74,14 +75,14 @@ import(
 )
 
 func main() {
-    s := sasetenancy.New()
+    s := sasetenancy.New(
+        sasetenancy.WithSecurity(shared.Security{
+            Bearer: "YOUR_BEARER_TOKEN_HERE",
+        }),
+    )
 
     ctx := context.Background()
-    res, err := s.TenancyGroup.Delete(ctx, operations.DeleteTenancyV1TenantServiceGroupsTsgIDRequest{
-        TsgID: "1378242802",
-    }, operations.DeleteTenancyV1TenantServiceGroupsTsgIDSecurity{
-        Bearer: "YOUR_BEARER_TOKEN_HERE",
-    })
+    res, err := s.TenancyGroup.Delete(ctx, "1378242802")
     if err != nil {
         log.Fatal(err)
     }
@@ -110,14 +111,14 @@ import(
 )
 
 func main() {
-    s := sasetenancy.New()
+    s := sasetenancy.New(
+        sasetenancy.WithSecurity(shared.Security{
+            Bearer: "YOUR_BEARER_TOKEN_HERE",
+        }),
+    )
 
     ctx := context.Background()
-    res, err := s.TenancyGroup.Get(ctx, operations.GetTenancyV1TenantServiceGroupsTsgIDRequest{
-        TsgID: "1378242802",
-    }, operations.GetTenancyV1TenantServiceGroupsTsgIDSecurity{
-        Bearer: "YOUR_BEARER_TOKEN_HERE",
-    })
+    res, err := s.TenancyGroup.Get(ctx, "1378242802")
     if err != nil {
         log.Fatal(err)
     }
@@ -148,14 +149,14 @@ import(
 )
 
 func main() {
-    s := sasetenancy.New()
+    s := sasetenancy.New(
+        sasetenancy.WithSecurity(shared.Security{
+            Bearer: "YOUR_BEARER_TOKEN_HERE",
+        }),
+    )
 
     ctx := context.Background()
-    res, err := s.TenancyGroup.List(ctx, operations.GetTenancyV1TenantServiceGroupsRequest{
-        Hierarchy: sasetenancy.Bool(false),
-    }, operations.GetTenancyV1TenantServiceGroupsSecurity{
-        Bearer: "YOUR_BEARER_TOKEN_HERE",
-    })
+    res, err := s.TenancyGroup.List(ctx, false)
     if err != nil {
         log.Fatal(err)
     }
@@ -188,17 +189,14 @@ import(
 )
 
 func main() {
-    s := sasetenancy.New()
+    s := sasetenancy.New(
+        sasetenancy.WithSecurity(shared.Security{
+            Bearer: "YOUR_BEARER_TOKEN_HERE",
+        }),
+    )
 
     ctx := context.Background()
-    res, err := s.TenancyGroup.ListAncestors(ctx, operations.PostTenancyV1TenantServiceGroupsTsgIDOperationsListAncestorsRequest{
-        Fields: sasetenancy.String("corrupti"),
-        IncludeSelf: sasetenancy.Bool(false),
-        Sort: operations.PostTenancyV1TenantServiceGroupsTsgIDOperationsListAncestorsSortDesc.ToPointer(),
-        TsgID: "1378242802",
-    }, operations.PostTenancyV1TenantServiceGroupsTsgIDOperationsListAncestorsSecurity{
-        Bearer: "YOUR_BEARER_TOKEN_HERE",
-    })
+    res, err := s.TenancyGroup.ListAncestors(ctx, "1378242802", "corrupti", false, operations.PostTenancyV1TenantServiceGroupsTsgIDOperationsListAncestorsSortDesc)
     if err != nil {
         log.Fatal(err)
     }
@@ -231,16 +229,14 @@ import(
 )
 
 func main() {
-    s := sasetenancy.New()
+    s := sasetenancy.New(
+        sasetenancy.WithSecurity(shared.Security{
+            Bearer: "YOUR_BEARER_TOKEN_HERE",
+        }),
+    )
 
     ctx := context.Background()
-    res, err := s.TenancyGroup.ListChildren(ctx, operations.PostTenancyV1TenantServiceGroupsTsgIDOperationsListChildrenRequest{
-        Hierarchy: sasetenancy.Bool(false),
-        IncludeSelf: sasetenancy.Bool(false),
-        TsgID: "1378242802",
-    }, operations.PostTenancyV1TenantServiceGroupsTsgIDOperationsListChildrenSecurity{
-        Bearer: "YOUR_BEARER_TOKEN_HERE",
-    })
+    res, err := s.TenancyGroup.ListChildren(ctx, "1378242802", false, false)
     if err != nil {
         log.Fatal(err)
     }
@@ -273,19 +269,18 @@ import(
 )
 
 func main() {
-    s := sasetenancy.New()
+    s := sasetenancy.New(
+        sasetenancy.WithSecurity(shared.Security{
+            Bearer: "YOUR_BEARER_TOKEN_HERE",
+        }),
+    )
 
     ctx := context.Background()
-    res, err := s.TenancyGroup.Update(ctx, operations.PutTenancyV1TenantServiceGroupsTsgIDRequest{
-        TenantServiceGroupUpdate: shared.TenantServiceGroupUpdate{
-            DisplayName: sasetenancy.String("Example TSG"),
-            SupportContact: sasetenancy.String("user@example.com"),
-            Vertical: shared.TenantServiceGroupUpdateVerticalHighTech.ToPointer(),
-        },
-        TsgID: "1378242802",
-    }, operations.PutTenancyV1TenantServiceGroupsTsgIDSecurity{
-        Bearer: "YOUR_BEARER_TOKEN_HERE",
-    })
+    res, err := s.TenancyGroup.Update(ctx, shared.TenantServiceGroupUpdate{
+        DisplayName: sasetenancy.String("Example TSG"),
+        SupportContact: sasetenancy.String("user@example.com"),
+        Vertical: shared.TenantServiceGroupUpdateVerticalHighTech.ToPointer(),
+    }, "1378242802")
     if err != nil {
         log.Fatal(err)
     }

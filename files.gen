@@ -1,5 +1,6 @@
 tenancygroup.go
 sasetenancy.go
+.gitignore
 go.mod
 go.sum
 pkg/types/bigint.go

@@ -12,7 +12,7 @@ import(
 func main() {
     s := sasetenancy.New(
         sasetenancy.WithSecurity(shared.Security{
-            Bearer: "YOUR_BEARER_TOKEN_HERE",
+            Bearer: "",
         }),
     )
 

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Manages tenant service groups.
+Tenant Service Group: Manages tenant service groups.
 
 
 ### Available Operations
